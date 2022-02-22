@@ -56,63 +56,63 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set => m_RawCameraImage = value;
         }
 
-         [SerializeField]
-         [Tooltip("The AROcclusionManager which will produce human depth and stencil textures.")]
-         AROcclusionManager m_OcclusionManager;
+        [SerializeField]
+        [Tooltip("The AROcclusionManager which will produce human depth and stencil textures.")]
+        AROcclusionManager m_OcclusionManager;
 
-         public AROcclusionManager occlusionManager
-         {
-             get => m_OcclusionManager;
-             set => m_OcclusionManager = value;
-         }
+        public AROcclusionManager occlusionManager
+        {
+            get => m_OcclusionManager;
+            set => m_OcclusionManager = value;
+        }
 
-         [SerializeField]
-         RawImage m_RawHumanDepthImage;
+        [SerializeField]
+        RawImage m_RawHumanDepthImage;
 
-         /// <summary>
-         /// The UI RawImage used to display the image on screen.
-         /// </summary>
-         public RawImage rawHumanDepthImage
-         {
-             get => m_RawHumanDepthImage;
-             set => m_RawHumanDepthImage = value;
-         }
+        /// <summary>
+        /// The UI RawImage used to display the image on screen.
+        /// </summary>
+        public RawImage rawHumanDepthImage
+        {
+            get => m_RawHumanDepthImage;
+            set => m_RawHumanDepthImage = value;
+        }
 
-         [SerializeField]
-         RawImage m_RawHumanStencilImage;
+        [SerializeField]
+        RawImage m_RawHumanStencilImage;
 
-         /// <summary>
-         /// The UI RawImage used to display the image on screen.
-         /// </summary>
-         public RawImage rawHumanStencilImage
-         {
-             get => m_RawHumanStencilImage;
-             set => m_RawHumanStencilImage = value;
-         }
+        /// <summary>
+        /// The UI RawImage used to display the image on screen.
+        /// </summary>
+        public RawImage rawHumanStencilImage
+        {
+            get => m_RawHumanStencilImage;
+            set => m_RawHumanStencilImage = value;
+        }
 
-         [SerializeField]
-         RawImage m_RawEnvironmentDepthImage;
+        [SerializeField]
+        RawImage m_RawEnvironmentDepthImage;
 
-         /// <summary>
-         /// The UI RawImage used to display the image on screen.
-         /// </summary>
-         public RawImage rawEnvironmentDepthImage
-         {
-             get => m_RawEnvironmentDepthImage;
-             set => m_RawEnvironmentDepthImage = value;
-         }
+        /// <summary>
+        /// The UI RawImage used to display the image on screen.
+        /// </summary>
+        public RawImage rawEnvironmentDepthImage
+        {
+            get => m_RawEnvironmentDepthImage;
+            set => m_RawEnvironmentDepthImage = value;
+        }
 
-         [SerializeField]
-         RawImage m_RawEnvironmentDepthConfidenceImage;
+        [SerializeField]
+        RawImage m_RawEnvironmentDepthConfidenceImage;
 
-         /// <summary>
-         /// The UI RawImage used to display the image on screen.
-         /// </summary>
-         public RawImage rawEnvironmentDepthConfidenceImage
-         {
-             get => m_RawEnvironmentDepthConfidenceImage;
-             set => m_RawEnvironmentDepthConfidenceImage = value;
-         }
+        /// <summary>
+        /// The UI RawImage used to display the image on screen.
+        /// </summary>
+        public RawImage rawEnvironmentDepthConfidenceImage
+        {
+            get => m_RawEnvironmentDepthConfidenceImage;
+            set => m_RawEnvironmentDepthConfidenceImage = value;
+        }
 
         [SerializeField]
         Text m_ImageInfo;
@@ -149,7 +149,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 XRCpuImage.Transformation.None => XRCpuImage.Transformation.MirrorX,
                 XRCpuImage.Transformation.MirrorX => XRCpuImage.Transformation.MirrorY,
-                XRCpuImage.Transformation.MirrorY => XRCpuImage.Transformation.MirrorX | XRCpuImage.Transformation.MirrorY,
+                XRCpuImage.Transformation.MirrorY => XRCpuImage.Transformation.MirrorX |
+                                                     XRCpuImage.Transformation.MirrorY,
                 _ => XRCpuImage.Transformation.None
             };
 
@@ -199,7 +200,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             // See XRCpuImage.FormatSupported for a complete list of supported formats.
             var format = TextureFormat.RGBA32;
 
-            if (m_CameraTexture == null || m_CameraTexture.width != image.width || m_CameraTexture.height != image.height)
+            if (m_CameraTexture == null ||
+                m_CameraTexture.width != image.width ||
+                m_CameraTexture.height != image.height)
             {
                 m_CameraTexture = new Texture2D(image.width, image.height, format, false);
             }
@@ -325,13 +328,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             // For display, we need to mirror about the vertical access.
-            var conversionParams = new XRCpuImage.ConversionParams(cpuImage, cpuImage.format.AsTextureFormat(), transformation);
+            var conversionParams =
+                new XRCpuImage.ConversionParams(cpuImage, cpuImage.format.AsTextureFormat(), transformation);
 
             // Get the Texture2D's underlying pixel buffer.
             var rawTextureData = texture.GetRawTextureData<byte>();
 
             // Make sure the destination buffer is large enough to hold the converted data (they should be the same size)
-            Debug.Assert(rawTextureData.Length == cpuImage.GetConvertedDataSize(conversionParams.outputDimensions, conversionParams.outputFormat),
+            Debug.Assert(
+                rawTextureData.Length ==
+                cpuImage.GetConvertedDataSize(conversionParams.outputDimensions, conversionParams.outputFormat),
                 "The Texture2D is not the same size as the converted data.");
 
             // Perform the conversion.
