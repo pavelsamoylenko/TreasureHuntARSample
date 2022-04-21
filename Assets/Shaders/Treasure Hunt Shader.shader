@@ -45,7 +45,7 @@ Shader "xSite/Treasure Hunt"
 
                 output.uv = input.uv * 2 - 1;
                 float3 fakePositionOS = float3(output.uv.x, 0, output.uv.y);
-                fakePositionOS.x *= _BaseMap_TexelSize.z / _BaseMap_TexelSize.w;
+                // fakePositionOS.y *= _ScreenParams.y / _ScreenParams.x;
                 // output.positionOS.xyz = fakePositionOS.xyz;
                 output.positionOS.xyz = input.positionOS.xyz;
                 output.projection = ComputeScreenPos(TransformObjectToHClip(fakePositionOS));
