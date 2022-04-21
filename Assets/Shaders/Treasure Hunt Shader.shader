@@ -40,7 +40,7 @@ Shader "xSite/Treasure Hunt"
                 Varyings output = (Varyings) 0;
                 output.uv = input.uv;
                 output.positionCS = TransformObjectToHClip(input.positionOS.xyz);
-                float3 a = float3(input.uv.x, input.uv.y, 0);
+                float3 a = float3(input.uv.y, input.uv.x, 0);
                 a.xy = a.xy * 2 * _Scale - _Scale;
                 output.projection = ComputeScreenPos(TransformObjectToHClip(a));
                 return output;
