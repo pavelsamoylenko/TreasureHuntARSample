@@ -20,6 +20,7 @@ Shader "xSite/Treasure Hunt"
 
             TEXTURE2D(_BaseMap);
             SAMPLER(sampler_BaseMap);
+            float4 _BaseMap_TexelSize;
             float _Scale;
             
             struct Attributes
@@ -33,21 +34,28 @@ Shader "xSite/Treasure Hunt"
                 float2 uv : TEXCOORD0;
                 float4 positionCS : SV_POSITION;
                 float4 projection : TEXCOORD1;
+                float4 positionOS : TEXCOORD2;
             };
             
             Varyings Vertex(Attributes input) 
             {
                 Varyings output = (Varyings) 0;
-                output.uv = input.uv;
+                
                 output.positionCS = TransformObjectToHClip(input.positionOS.xyz);
-                float3 a = float3(input.uv.y, input.uv.x, 0);
-                a.xy = a.xy * 2 * _Scale - _Scale;
-                output.projection = ComputeScreenPos(TransformObjectToHClip(a));
+
+                output.uv = input.uv * 2 - 1;
+                float3 fakePositionOS = float3(output.uv.x, 0, output.uv.y);
+                fakePositionOS.x *= _BaseMap_TexelSize.z / _BaseMap_TexelSize.w;
+                // output.positionOS.xyz = fakePositionOS.xyz;
+                output.positionOS.xyz = input.positionOS.xyz;
+                output.projection = ComputeScreenPos(TransformObjectToHClip(fakePositionOS));
+
                 return output;
             }
             
             half4 Fragment(Varyings input) : SV_Target
             {
+                // return half4(input.positionOS.xz, 0, 1);
                 float2 screenUV = input.projection.xy / input.projection.w;
                 half4 color = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, screenUV);
                 //return half4(screenUV, 0, 1);
