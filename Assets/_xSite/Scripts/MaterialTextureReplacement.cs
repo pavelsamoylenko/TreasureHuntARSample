@@ -28,8 +28,8 @@ namespace xSite
         {
             Debug.Log("Texture Received");
             if(!_scaled) SetScale();
-            materialRenderer.material.SetTexture(BaseMap, texture2D);
-            //materialRenderer.sharedMaterial.SetTexture(BaseMap, texture2D);
+            //materialRenderer.material.SetTexture(BaseMap, texture2D);
+            materialRenderer.sharedMaterial.SetTexture(BaseMap, texture2D);
         }
 
         private void SetScale()

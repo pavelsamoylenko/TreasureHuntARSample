@@ -108,10 +108,10 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _UVCoefficient: 0.6
+    - _UVCoefficient: 0.62
     - _UVSec: 0
     - _XCoefficient: 6.11
-    - _XZCoefficient: 1.43
+    - _XZCoefficient: 1
     - _YCoefficient: 1
     - _ZCoefficient: 1
     - _ZWrite: 1

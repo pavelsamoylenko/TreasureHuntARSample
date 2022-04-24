@@ -58,7 +58,7 @@ Shader "xSite/Treasure Hunt"
 
             half4 Fragment(Varyings input) : SV_Target
             {
-                float scale_x = _XZCoefficient * _BaseMap_TexelSize.w /
+                float scale_x = _UVCoefficient * _ScreenParams.y / _ScreenParams.x * _BaseMap_TexelSize.w /
                     _BaseMap_TexelSize.z;
                 float scale_y = _UVCoefficient;
                 float2 screenUV = input.projection.yx / input.projection.w;
