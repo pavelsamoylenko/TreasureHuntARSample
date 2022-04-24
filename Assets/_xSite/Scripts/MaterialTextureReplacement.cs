@@ -1,8 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.XR.ARFoundation;
-using UnityEngine.XR.ARFoundation.Samples;
 
 namespace xSite
 {
@@ -33,6 +29,7 @@ namespace xSite
             Debug.Log("Texture Received");
             if(!_scaled) SetScale();
             materialRenderer.material.SetTexture(BaseMap, texture2D);
+            //materialRenderer.sharedMaterial.SetTexture(BaseMap, texture2D);
         }
 
         private void SetScale()
